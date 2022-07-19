@@ -11,6 +11,9 @@ export default function Index() {
 				<li>
 					<Link to="/another">Another Page</Link>
 				</li>
+				<li>
+					<Link to="/posts">Post Wall</Link>
+				</li>
 			</ul>
 		</div>
 	);

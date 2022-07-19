@@ -1,0 +1,22 @@
+.PostWall {
+	margin-top: 20px;
+}
+
+.Post {
+	position: relative;
+	padding-bottom: 12px;
+}
+
+.Post:not(:first-child) {
+	padding-top: 12px;
+}
+
+.Post:not(:first-child):before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 20px;
+	height: 1px;
+	width: min( calc( 100vw - 40px ), 400px );
+	border-top: 1px solid black;
+}
