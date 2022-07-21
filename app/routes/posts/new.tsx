@@ -1,4 +1,4 @@
-import { ActionFunction, json, LinksFunction, redirect } from "@remix-run/node";
+import { ActionArgs, json, LinksFunction, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { CreatePost } from "~/utils/posts.server";
 import stylesUrl from "~/styles/new.css";
@@ -12,17 +12,17 @@ interface ActionData {
 	invalidMessage?: boolean
 }
 
-export const action: ActionFunction = async ({request}) => {
-	const formData = await request.formData();
+export async function action(args: ActionArgs) {
+	const formData = await args.request.formData();
 	const authkey = formData.get('authkey');
 	const message = formData.get('message');
 
 	const testKey = process.env.TEST_APP_KEY;
 	if ( !authkey || typeof authkey !== "string" || !testKey || authkey !== testKey )
-		return json< ActionData >( { invalidKey: true } );
+		return json< ActionData >({ invalidKey: true });
 
 	if ( !message || typeof message !== "string" || message.length > 255 )
-		return json< ActionData >( { invalidMessage: true } );
+		return json< ActionData >({ invalidMessage: true });
 
 	await CreatePost(message);
 
@@ -30,7 +30,7 @@ export const action: ActionFunction = async ({request}) => {
 };
 
 export default function NewPost() {
-	const errors = useActionData< ActionData >();
+	const errors = useActionData< typeof action >();
 	return (
 		<div>
 			<h3>Create New Post</h3>
