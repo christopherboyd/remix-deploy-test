@@ -1,0 +1,33 @@
+.Perf {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    max-width: 90vw;
+    height: 200px;
+    background-color: #f0f0f0;
+    overflow-y: scroll;
+
+    font-family: "Source Code Pro", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.LoggedRequest {
+    margin-bottom: 1em;
+}
+
+.PerfEntryName {
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.PerfEntryRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.PerfEntryDuration {
+    margin-left: auto;
+    padding-left: 1em;
+}
