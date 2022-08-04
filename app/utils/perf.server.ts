@@ -25,6 +25,16 @@ class PerfTracker {
 	}
 	
 	private GetContextData(context: any) {
+		// in the Vercel template, remix's server is used for local development and
+		// there isn't a spot outside to hook and add a context. As their server tries
+		// to flush memory between requests, just fake up a static ref here
+		if (process.env.NODE_ENV !== "production") {
+			if (!staticRef)
+				staticRef = {};
+
+			context = staticRef;
+		}
+
 		let data = this.contexts.get(context);
 		if (data === undefined)
 		{
@@ -36,6 +46,7 @@ class PerfTracker {
 	}
 };
 
+let staticRef: any;
 let tracker: PerfTracker;
 export function Perf() {
 	if (!tracker)

@@ -16,7 +16,8 @@ export default function handleRequest( request: Request, responseStatusCode: num
 	responseHeaders.set("Content-Type", "text/html");
 	
 	// see perf context comment above
-	// responseHeaders.set('Server-Timing', Perf().GetServerTimingHeader(context));
+	if (process.env.NODE_ENV !== "production")
+		responseHeaders.set('Server-Timing', Perf().GetServerTimingHeader(undefined));
 
 	return new Response("<!DOCTYPE html>" + markup, {
 		status: responseStatusCode,
@@ -26,6 +27,8 @@ export default function handleRequest( request: Request, responseStatusCode: num
 
 export const handleDataRequest: HandleDataRequestFunction = ( response: Response, args: DataFunctionArgs) => {
 	// see perf context comment above
-	// response.headers.set('Server-Timing', Perf().GetServerTimingHeader(args.context));
+	if (process.env.NODE_ENV !== "production")
+		response.headers.set('Server-Timing', Perf().GetServerTimingHeader(args.context));
+
 	return response;
 };
