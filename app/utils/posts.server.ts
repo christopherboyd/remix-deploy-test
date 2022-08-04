@@ -1,8 +1,8 @@
 import { prisma } from "~/utils/prisma.server";
 import { Perf } from "./perf.server";
 
-export async function GetRecentPosts(count: number ) {
-	let stopTimer = Perf().Track('GetRecentPosts');
+export async function GetRecentPosts(context: any, count: number ) {
+	let stopTimer = Perf().Track(context, 'GetRecentPosts');
 	let data = await prisma.posts.findMany({
 		take: count,
 		orderBy: { createdAt: "desc" }
@@ -12,8 +12,8 @@ export async function GetRecentPosts(count: number ) {
 	return data;
 }
 
-export async function CreatePost(message: string) {
-	let stopTimer = Perf().Track('CreatePost');
+export async function CreatePost(context:any, message: string) {
+	let stopTimer = Perf().Track(context, 'CreatePost');
 	let result = await prisma.posts.create({ data: { message } });
 	stopTimer();
 
