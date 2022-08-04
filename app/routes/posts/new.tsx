@@ -9,7 +9,7 @@ export const links: LinksFunction = () => {
 	return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
-export async function action({request}: ActionArgs) {
+export async function action({request, context}: ActionArgs) {
 	await RequireSession(request);
 	const formData = await request.formData();
 	const message = formData.get('message');
@@ -17,7 +17,7 @@ export async function action({request}: ActionArgs) {
 	if ( !message || typeof message !== "string" || message.length > 255 )
 		return json({ invalidMessage: true });
 
-	await CreatePost(message);
+	await CreatePost(context, message);
 
 	return redirect('/posts');
 };

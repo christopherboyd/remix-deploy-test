@@ -12,8 +12,8 @@ export const links: LinksFunction = () => {
 // don't return IP. createAt turns into a string on serialization, so can't use Pick
 type PublicPostData = { id: number, message: string, createdAt: string };
 
-export async function loader(args: LoaderArgs) {
-	let data = await GetRecentPosts(10);
+export async function loader({request, context}: LoaderArgs) {
+	let data = await GetRecentPosts(context, 10);
 	let posts = data.map((record) => { return { id: record.id, createdAt: record.createdAt, message: record.message }; });
 
 	return json({posts: posts});
